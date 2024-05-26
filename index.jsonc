@@ -1,0 +1,171 @@
+{
+  "name": "Tutorial",
+  "author": "Abdul Vaiz",
+  "version": "1.0.0",
+  "start": "StartRoom",
+  "description": "This is a tutorial game to help you get started with the game mechanic.",
+  "config": {
+    "debug": false,
+    "time": {
+      "start": "1999-01-01T07:00:00"
+    },
+
+    "allowedActions": [
+      "take",
+      "search",
+      "open",
+      "close",
+      "enter",
+      "unlock",
+      "sleep",
+      "help",
+      "save",
+      "load",
+      "quit",
+      "look",
+      "inventory",
+      "time",
+      "read",
+      "drop",
+      "talk",
+      "restart"
+    ],
+    "ActionDescription": {
+      "take": "[item] Take an item",
+      "search": "[item] Search an item",
+      "open": "[item] Open an item",
+      "close": "[item] Close an item",
+      "enter": "[item] Enter a location",
+      "read": "[item] Read an item",
+      "unlock": "[item] Unlock an item",
+      "sleep": "[item] Sleep on an item",
+      "help": "Display help",
+      "save": "Save game",
+      "load": "Load game",
+      "quit": "Quit game",
+      "look": "Look around",
+      "inventory": "Display inventory",
+      "drop": "[item] Drop an item",
+      "talk": "[object] Talk to an item",
+      "restart": "Restart game"
+    }
+  },
+  "inventory": [],
+  "finishmessage": "Congratulations! You have completed the tutorial.",
+  "gameovermessage": "Game Over",
+  "locations": [
+    {
+      "id": "StartRoom",
+      "name": "First Room",
+      "description": "This is the first room of the game. You can search the desk to find another clue.",
+      "items": ["bed", "desk", "door"]
+    },
+    {
+      "id": "EndRoom",
+      "name": "Second Room",
+      "description": "This is the second room of the game. You have successfully entered the second room.",
+      "items": ["door", "doorend"]
+    }
+  ],
+  "item": [
+    {
+      "id": "desk",
+      "name": "desk",
+      "description": "A wooden desk with a paper on top of it. you can read the paper.",
+      "canSearch": {
+        "search": {
+          "items": ["paper"],
+          "message": "You search the desk and discover a paper, type 'read paper' to read it. type look to sea item in room.",
+          "errorMessage": "You've already searched the desk."
+        },
+        "message": "You search the desk."
+      }
+    },
+    {
+      "id": "paper",
+      "name": "paper",
+      "description": "A piece of paper with a message on it.",
+      "canRead": {
+        "read": true,
+        "message": "You read the paper. It says 'The key is under the bed.' search the bed to find the key."
+      }
+    },
+    {
+      "id": "bed",
+      "name": "bed",
+      "description": "A wooden bed with a pillow on it.",
+      "canSearch": {
+        "search": {
+          "items": ["key"],
+          "message": "You search the bed and find a key. type 'take key' to take it. type look to sea item in room.",
+          "errorMessage": "You've already searched the bed."
+        },
+        "message": "You search the bed."
+      }
+    },
+    {
+      "id": "key",
+      "name": "key",
+      "description": "A small key.",
+      "canTake": {
+        "take": true,
+        "message": "You take the key, type 'inventory' to see your inventory."
+      }
+    },
+    {
+      "id": "door",
+      "name": "door",
+      "description": "A wooden door.",
+      "canOpen": {
+        "open": false,
+        "message": "You open the door.",
+        "errorMessage": "The door is locked."
+      },
+      "canClose": {
+        "message": "You close the door."
+      },
+      "canEnter": {
+        "enter": "EndRoom",
+        "message": "You successfully enter the second room, type 'look' too see items in location.",
+        "locationbefore": "StartRoom"
+      },
+      "canUnlock": {
+        "unlock": true,
+        "message": "With the key in inventory, you unlock the door.",
+        "errorMessage": "You need a key.",
+        "use": "key"
+      },
+      "states": {
+        "open": {
+          "message": "The door is open."
+        },
+        "closed": {
+          "message": "The door is closed."
+        }
+      }
+    },
+    {
+      "id": "doorend",
+      "name": "doorend",
+      "description": "A locked door blocking your path in the corridor.",
+      "canOpen": {
+        "open": true,
+        "message": "You open the door.",
+        "errorMessage": "The door is securely locked."
+      },
+      "canEnter": {
+        "enter": true,
+        "message": "You can't enter; the door is locked.",
+        "errorMessage": "You can't enter; the door is locked."
+      },
+      "state": "closed",
+      "states": {
+        "open": {
+          "message": "The door swings open, marking your path to freedom.",
+          "finish": true
+        }
+      }
+    }
+  ],
+  "ARGAVER": "2.0.0"
+}
